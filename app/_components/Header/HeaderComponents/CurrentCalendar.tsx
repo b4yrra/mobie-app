@@ -12,7 +12,7 @@ export const CurrCalendar: React.FC = () => {
         <div className="flex items-center">
           <CalendarRange color="blue" size={15} />
         </div>
-        <div className={`text-[13px] text-black font-medium`}>
+        <div className={`text-[13px] text-black font-medium dark:text-white`}>
           {month} сарын {day}
         </div>
       </div>

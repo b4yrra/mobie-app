@@ -44,13 +44,13 @@ export const CurrencyRate = () => {
           </div>
 
           {/* Rate */}
-          <span className="text-[13px] text-black font-medium">
+          <span className="text-[13px] text-black font-medium dark:text-white">
             {loading ? (
               <span className="text-gray-300">—</span>
             ) : rates[code] ? (
               <>
                 {rates[code].toLocaleString()}
-                <span className="text-gray-500">₮</span>
+                <span className="text-black dark:text-white"> ₮</span>
               </>
             ) : (
               "—"

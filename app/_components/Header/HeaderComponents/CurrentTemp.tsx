@@ -55,7 +55,7 @@ export const CurrWeather = () => {
         </svg>
 
         {/* Temperature text */}
-        <span className="text-[13px] text-black font-medium">
+        <span className="text-[13px] text-black font-medium dark:text-white">
           {temp !== null ? `${temp}°C` : "—"}
         </span>
       </div>
