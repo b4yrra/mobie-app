@@ -128,3 +128,15 @@
     @apply font-sans;
   }
 }
+
+@layer base {
+  .dark body {
+    background: linear-gradient(
+      to bottom,
+      #0a1628 0%,
+      #0f2347 40%,
+      #1a3a6e 100%
+    );
+    min-height: 100vh;
+  }
+}
