@@ -18,7 +18,12 @@ export const HeaderWithLogo = () => {
   return (
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-3">
-        <img src="./emon-logo.svg" alt="emon-logo" />
+        {isDark ? (
+          <img src="./emon-logo-dark.svg" alt="emon-logo-dark" />
+        ) : (
+          <img src="./emon-logo.svg" alt="emon-logo" />
+        )}
+
         <ModeToggle />
       </div>
       <div className="flex items-center gap-3">
