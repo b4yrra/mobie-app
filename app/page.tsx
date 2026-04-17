@@ -1,9 +1,9 @@
-import { HeroInputSection } from "./_components/HeroSection/HeroInput";
+import { PageContainer } from "./PageContainer";
 
 export default function Home() {
   return (
     <div>
-      <HeroInputSection />
+      <PageContainer />
     </div>
   );
 }

@@ -36,13 +36,13 @@ export const HeaderWithLogo = () => {
         </button>
 
         <button
-          className={`p-2 rounded-full transition-colors ${isDark ? "bg-blue-950 hover:bg-blue-900" : "bg-blue-50 hover:bg-blue-100"}`}
+          className={`p-2 rounded-full transition-colors ${isDark ? "bg-[#1a314d] hover:bg-blue-900" : "bg-[#e6f0ff] hover:bg-blue-100"}`}
         >
           <LayoutGrid size={20} strokeWidth={1} className="text-blue-500" />
         </button>
 
         <button
-          className={`p-2 rounded-full transition-colors ${isDark ? "bg-blue-950 hover:bg-blue-900" : "bg-blue-50 hover:bg-blue-100"}`}
+          className={`p-2 rounded-full transition-colors ${isDark ? "bg-[#1a314d] hover:bg-blue-900" : "bg-[#e6f0ff] hover:bg-blue-100"}`}
         >
           <PersonStanding size={20} strokeWidth={1} className="text-blue-500" />
         </button>

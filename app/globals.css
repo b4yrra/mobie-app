@@ -84,7 +84,7 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #0c192e;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -131,12 +131,23 @@
 
 @layer base {
   .dark body {
-    background: linear-gradient(
-      to bottom,
-      #0a1628 0%,
-      #0f2347 40%,
-      #1a3a6e 100%
-    );
+    background: linear-gradient(to bottom, #0c192e 0%, #0c192e 100%);
     min-height: 100vh;
   }
+
+  .light body {
+    background: #f8fafc;
+  }
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-brand: "AnineuePROKZ", "Gilroy", "Arial", sans-serif;
 }
