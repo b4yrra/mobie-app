@@ -10,7 +10,7 @@ export const LanguageSelection = () => {
     <div
       className={`${montserrat.className} text-black text-[13px] font-medium flex gap-5 tracking-tighter dark:text-white`}
     >
-      <div>For Foreign</div>
+      <div>For Foreigners</div>
       <div>Монгол бичгийн хувилбар</div>
     </div>
   );
