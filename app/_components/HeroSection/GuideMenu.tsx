@@ -86,8 +86,10 @@ export const GuideMenu = () => {
           </p>
         </div>
         <Button
-          className={`rounded-full transition-all duration-300 text-xs font-semibold p-4 text-black dark:text-white ${
-            theme === "light" ? "bg-[#e6f0ff]" : "bg-[#233552]"
+          className={`rounded-full transition-all duration-300 text-xs font-semibold p-4 ${
+            theme === "light"
+              ? "bg-[#e6f0ff] text-black"
+              : "bg-[#233552] text-white"
           }`}
         >
           Бүгдийг үзэх

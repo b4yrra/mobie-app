@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import React from "react";
 import { Montserrat } from "next/font/google";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -64,10 +65,8 @@ export const NewsDashboard = () => {
           </p>
         </div>
         <Button
-          className={`rounded-full transition-all duration-300 text-xs font-semibold px-5 py-2 h-auto ${
-            theme === "light"
-              ? "bg-[#e6f0ff] text-blue-600 hover:bg-[#d0e4ff]"
-              : "bg-[#233552] text-white hover:bg-[#2d4368]"
+          className={`rounded-full transition-all duration-300 text-xs font-semibold p-4 text-black dark:text-white ${
+            theme === "light" ? "bg-[#e6f0ff]" : "bg-[#233552]"
           }`}
         >
           Бүгдийг үзэх
@@ -111,7 +110,7 @@ export const NewsDashboard = () => {
               className="relative rounded-[12px] overflow-hidden w-full h-48 h-[152px]! w-full! lg:h-[121px]! lg:w-[121px]! object-cover"
             />
             <div className="flex flex-col gap-3">
-              <div className="text-[#c4ccd7] font-semibold line-clamp-1 tracking-wide! text-[11px] dark:text-[#475872]">
+              <div className="font-semibold line-clamp-1 tracking-wide! text-[11px] text-[#475872] dark:text-[#c4ccd7]">
                 {parNew.label}
               </div>
               <p className="h6-gilroy text-foreground lg:line-clamp-2 tracking-wide! leading-5 max-h-10 overflow-hidden overflow-ellipsis font-semibold">
@@ -119,8 +118,13 @@ export const NewsDashboard = () => {
               </p>
             </div>
             <div className="flex justify-between">
-              <div></div>
-              <div></div>
+              <div className="flex gap-5 items-centerp px-3 py-1">
+                <ThumbsUp size={15} className="opacity-50" />
+                <ThumbsDown size={15} className="opacity-50" />
+              </div>
+              <div className="opacity-50 text-xs font-semibold">
+                {parNew.date}
+              </div>
             </div>
           </a>
         ))}

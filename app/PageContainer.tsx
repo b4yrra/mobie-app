@@ -6,6 +6,8 @@ import { HeroInputSection } from "./_components/HeroSection/HeroInput";
 import { MainSection } from "./_components/MenuCards/MainSection";
 import { ServiceSelection } from "./_components/MenuCards/ServiceSelections";
 import { NewsDashboard } from "./_components/NewsSection/NewsSection";
+import { SlideNews } from "./_components/NewsSection/SlideNews";
+import { MongolianStatsDashboard } from "./_components/Footer/BottomInformation";
 
 const ScrollSection = ({ children }: { children: React.ReactNode }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -60,6 +62,16 @@ export const PageContainer = () => {
       <ScrollSection>
         <NewsDashboard />
       </ScrollSection>
+
+      <div className="px-3 mt-20">
+        <ScrollSection>
+          <SlideNews />
+        </ScrollSection>
+
+        <ScrollSection>
+          <MongolianStatsDashboard />
+        </ScrollSection>
+      </div>
     </div>
   );
 };

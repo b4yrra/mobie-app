@@ -8,3 +8,34 @@ const montserrat = Montserrat({
 });
 
 ${montserrat.className}
+
+const SlideNew: SlideProps[] = [
+  {
+    id: 1,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/2/4/3e78c076-ea2e-47c8-b756-d008c7eb419d.jpg",
+  },
+  {
+    id: 2,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/4/13/c9f9c26f-6c25-4b3f-bc02-39d72c7a0ef6.png",
+  },
+  {
+    id: 3,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/4/7/a52fc5b0-c977-422b-9710-0c1f9233baaa.jpg",
+  },
+  {
+    id: 4,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/2/11/3042f686-c0f5-4f75-8aeb-caac9e74d3a8.jpg",
+  },
+  {
+    id: 5,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/2/5/05f5f242-16c8-43ea-ac3b-597122ba9758.png",
+  },
+  {
+    id: 6,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/2/10/27fad4b9-f2c8-46a3-815f-e5a6c8f4ddb9.png",
+  },
+  {
+    id: 7,
+    img: "https://cdn.e-mongolia.mn/uploads/133/banner/2026/2/10/f2c9b1b9-ebc8-491a-8170-e3689fd748d2.png",
+  },
+];
