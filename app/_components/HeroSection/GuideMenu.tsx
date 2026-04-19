@@ -55,32 +55,38 @@ export const GuideMenu = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true); // ADD THIS
+    setMounted(true);
   }, []);
-
-  const isLight = mounted && theme === "light";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // When the section is 10% visible, trigger the animation
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Optional: Stop observing after it becomes visible once
           if (sectionRef.current) observer.unobserve(sectionRef.current);
         }
       },
-      { threshold: 0.1 }, // 0.1 means 10% of the element is visible
+      { threshold: 0.1 },
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => {
       if (sectionRef.current) observer.disconnect();
     };
   }, []);
+
+  const isLight = mounted ? theme === "light" : true;
+
+  const cardClass = mounted
+    ? isLight
+      ? "bg-white border-[#e6ebf3]"
+      : "bg-[#1e2a40] border-[#2a3b55]"
+    : "bg-white border-[#e6ebf3]";
+
+  const buttonClass = mounted
+    ? isLight
+      ? "bg-[#e6f0ff] text-black"
+      : "bg-[#233552] text-white"
+    : "bg-[#e6f0ff] text-black";
 
   return (
     <div ref={sectionRef} className={`${montserrat.className} px-3 mb-10`}>
@@ -93,9 +99,7 @@ export const GuideMenu = () => {
           </p>
         </div>
         <Button
-          className={`rounded-full transition-all duration-300 text-xs font-semibold p-4 ${
-            isLight ? "bg-[#e6f0ff] text-black" : "bg-[#233552] text-white"
-          }`}
+          className={`rounded-full transition-all duration-300 text-xs font-semibold p-4 ${buttonClass}`}
         >
           Бүгдийг үзэх
         </Button>
@@ -105,16 +109,12 @@ export const GuideMenu = () => {
         {cards.map((card, index) => (
           <div
             key={index}
-            style={{
-              transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
-            }}
+            style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
             className={`
-              relative flex items-center justify-between px-5 min-h-[85px] overflow-hidden rounded-lg border 
+              relative flex items-center justify-between px-5 min-h-[85px] overflow-hidden rounded-lg border
               transition-all duration-700 ease-out
-              ${theme === "light" ? "bg-white border-[#e6ebf3]" : "bg-[#1e2a40] border-[#2a3b55]"}              
-              ${isLight ? "bg-white border-[#e6ebf3]" : "bg-[#1e2a40] border-[#2a3b55]"} 
+              ${cardClass}
               ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-
             `}
           >
             <div className="z-10 flex flex-col justify-center gap-3 flex-1 py-5 pr-3">
@@ -122,7 +122,6 @@ export const GuideMenu = () => {
                 {card.title}
               </h2>
             </div>
-
             <div className="relative flex-shrink-0 self-stretch flex items-center">
               <img
                 src={card.image}

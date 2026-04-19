@@ -1,31 +1,25 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-const isUserInfoRoute = createRouteMatcher(["/user-info(.*)"]);
-const isApiRoute = createRouteMatcher(["/api(.*)"]);
+const publicRoutes = ["/sign-in", "/sign-up", "/api"];
 
-export default clerkMiddleware(async (auth, req) => {
-  const { userId } = await auth();
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const session = req.cookies.get("session_user")?.value;
 
-  if (!userId) {
-    if (isUserInfoRoute(req)) {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-    return;
+  const isPublic = publicRoutes.some((r) => pathname.startsWith(r));
+
+  if (!session && !isPublic) {
+    return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 
-  if (isApiRoute(req)) return;
-
-  const hasProfile = req.cookies.get("has_profile")?.value === "true";
-
-  if (hasProfile && isUserInfoRoute(req)) {
+  if (
+    session &&
+    (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up"))
+  ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
-
-  if (!hasProfile && !isUserInfoRoute(req)) {
-    return NextResponse.redirect(new URL("/user-info", req.url));
-  }
-});
+}
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Search, X, Radio } from "lucide-react";
 import { Montserrat } from "next/font/google";
+import { createPortal } from "react-dom";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -23,35 +24,43 @@ const montserrat = Montserrat({
 });
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
-  // Close the modal when pressing Escape
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    if (isOpen) window.addEventListener("keydown", handleKeyDown);
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  return (
+  const modal = (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center pt-20 px-4 bg-[#373737]/50 backdrop-blur-xs transition-opacity duration-300 ${montserrat.className}`}
+      className={`fixed inset-0 flex flex-col items-center pt-20 px-4 bg-[#373737]/50 backdrop-blur-sm transition-opacity duration-300 ${montserrat.className}`}
+      style={{ zIndex: 99999 }}
     >
-      {/* Clickable backdrop to close */}
+      {/* Backdrop */}
       <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
 
-      {/* Close Button (Top Right) */}
+      {/* Close Button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 p-2 text-white/50 hover:text-white bg-white/5 rounded-full transition-colors z-20"
+        className="absolute top-6 right-6 p-2 text-white/50 hover:text-white bg-white/5 rounded-full transition-colors"
+        style={{ zIndex: 100000 }}
       >
         <X className="w-6 h-6" />
       </button>
 
-      {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-3xl flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
-        {/* Header Text */}
+      {/* Main Content */}
+      <div
+        className="relative w-full max-w-3xl flex flex-col gap-6"
+        style={{ zIndex: 100000 }}
+      >
         <div className="flex flex-col gap-1">
           <h2 className="text-white text-3xl font-bold tracking-wide">
             Нэгдсэн хайлт
@@ -62,44 +71,35 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           </p>
         </div>
 
-        {/* The Glowing Search Bar */}
-        <div className="relative group w-full mt-2">
-          {/* Neon Glow Ring */}
-          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#4f75ff] to-[#a05bf5] rounded-full blur-[4px] opacity-80"></div>
-
+        {/* Search Bar */}
+        <div className="relative w-full mt-2">
+          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#4f75ff] to-[#a05bf5] rounded-full blur-[4px] opacity-80" />
           <div className="relative flex items-center bg-[#1b223c] rounded-full h-16 px-3 shadow-2xl">
-            {/* Left Icon */}
             <div className="w-10 h-10 rounded-full bg-[#2a3556] flex items-center justify-center mr-3 shrink-0">
               <Radio className="w-5 h-5 text-[#6c8cf2]" />
             </div>
-
-            {/* Input Field */}
             <input
+              ref={inputRef}
               type="text"
-              autoFocus
               placeholder="Үйлчилгээ, хууль, яам, засгийн газрын нэгжүүдэр хайх..."
               className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-gray-400 text-base"
             />
           </div>
         </div>
 
-        {/* Suggested Searches List */}
+        {/* Suggested Searches */}
         <div className="flex flex-col gap-3 mt-6">
           <h3 className="text-white font-semibold mb-2 text-lg">
             Санал болгож буй хайлтууд
           </h3>
-
           {SUGGESTED_SEARCHES.map((text, idx) => (
             <button
               key={idx}
               className="flex items-center w-full bg-white/10 hover:bg-white/20 transition-colors rounded-full p-2 pr-6 text-left group"
             >
-              {/* White Circle with Search Icon */}
               <div className="w-11 h-11 shrink-0 rounded-full bg-white flex items-center justify-center mr-4">
                 <Search className="w-5 h-5 text-gray-400" />
               </div>
-
-              {/* Suggestion Text */}
               <span className="text-gray-200 text-sm md:text-base leading-snug group-hover:text-white transition-colors">
                 {text}
               </span>
@@ -109,4 +109,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       </div>
     </div>
   );
+
+  return createPortal(modal, document.body);
 }
