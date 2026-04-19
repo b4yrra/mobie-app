@@ -51,7 +51,14 @@ const cards: CardItem[] = [
 export const GuideMenu = () => {
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true); // ADD THIS
+  }, []);
+
+  const isLight = mounted && theme === "light";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -87,9 +94,7 @@ export const GuideMenu = () => {
         </div>
         <Button
           className={`rounded-full transition-all duration-300 text-xs font-semibold p-4 ${
-            theme === "light"
-              ? "bg-[#e6f0ff] text-black"
-              : "bg-[#233552] text-white"
+            isLight ? "bg-[#e6f0ff] text-black" : "bg-[#233552] text-white"
           }`}
         >
           Бүгдийг үзэх
@@ -106,12 +111,10 @@ export const GuideMenu = () => {
             className={`
               relative flex items-center justify-between px-5 min-h-[85px] overflow-hidden rounded-lg border 
               transition-all duration-700 ease-out
-              ${theme === "light" ? "bg-white border-[#e6ebf3]" : "bg-[#1e2a40] border-[#2a3b55]"}
-              ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }
+              ${theme === "light" ? "bg-white border-[#e6ebf3]" : "bg-[#1e2a40] border-[#2a3b55]"}              
+              ${isLight ? "bg-white border-[#e6ebf3]" : "bg-[#1e2a40] border-[#2a3b55]"} 
+              ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
+
             `}
           >
             <div className="z-10 flex flex-col justify-center gap-3 flex-1 py-5 pr-3">

@@ -16,5 +16,15 @@ export async function GET() {
     },
   });
 
-  return NextResponse.json(user);
+  const res = NextResponse.json(user);
+
+  if (user) {
+    res.cookies.set("has_profile", "true", {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  }
+
+  return res;
 }

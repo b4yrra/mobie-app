@@ -1,10 +1,15 @@
+"use client";
+
 import { CalendarRange } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const CurrCalendar: React.FC = () => {
-  const today = new Date();
-  const month = today.getMonth() + 1;
-  const day = today.getDate();
+  const [date, setDate] = useState<{ month: number; day: number } | null>(null);
+
+  useEffect(() => {
+    const today = new Date();
+    setDate({ month: today.getMonth() + 1, day: today.getDate() });
+  }, []);
 
   return (
     <div className="flex items-center">
@@ -12,8 +17,8 @@ export const CurrCalendar: React.FC = () => {
         <div className="flex items-center">
           <CalendarRange color="blue" size={15} />
         </div>
-        <div className={`text-[13px] text-black font-medium dark:text-white`}>
-          {month} сарын {day}
+        <div className="text-[13px] text-black font-medium dark:text-white">
+          {date ? `${date.month} сарын ${date.day}` : "—"}
         </div>
       </div>
     </div>

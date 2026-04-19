@@ -10,7 +10,7 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
 });
 
-export default function OnboardingPage() {
+export default function UserInfoPage() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
 
@@ -23,15 +23,19 @@ export default function OnboardingPage() {
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Pre-fill from Clerk + check if already has profile
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
+
+    if (!user) {
+      router.replace("/");
+      return;
+    }
 
     setFirstName(user.firstName ?? "");
     setLastName(user.lastName ?? "");
     setPreview(user.imageUrl ?? null);
 
-    // Check DB via GET — if profile exists, skip onboarding
+    // Check if already has profile → skip to home
     fetch("/api/onboarding")
       .then((r) => r.json())
       .then((data) => {
@@ -52,11 +56,6 @@ export default function OnboardingPage() {
     );
   }
 
-  if (!user) {
-    router.push("/");
-    return null;
-  }
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -74,10 +73,10 @@ export default function OnboardingPage() {
     setError(null);
 
     try {
-      await user.update({ firstName, lastName });
+      await user!.update({ firstName, lastName });
 
       if (imageFile) {
-        await user.setProfileImage({ file: imageFile });
+        await user!.setProfileImage({ file: imageFile });
       }
 
       const res = await fetch("/api/onboarding", {

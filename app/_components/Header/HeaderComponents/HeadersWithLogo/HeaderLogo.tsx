@@ -21,30 +21,37 @@ export const HeaderWithLogo = () => {
   const { isSignedIn } = useUser();
   const router = useRouter();
   const [dbUser, setDbUser] = useState<DBUser | null>(null);
+  const [userChecked, setUserChecked] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Fetch user from your DB once signed in
   useEffect(() => {
-    if (!isSignedIn) return;
+    if (!isSignedIn) {
+      setUserChecked(true);
+      return;
+    }
     fetch("/api/user")
       .then((res) => res.json())
-      .then((data) => setDbUser(data))
-      .catch(console.error);
+      .then((data) => {
+        setDbUser(data);
+        setUserChecked(true);
+      })
+      .catch(() => setUserChecked(true));
   }, [isSignedIn]);
 
   const isDark = mounted && theme === "dark";
 
   const handleUserClick = () => {
     if (!isSignedIn) {
-      openSignIn({ fallbackRedirectUrl: "/onboarding" });
-    } else if (!dbUser) {
-      // Signed in but no profile yet → go to onboarding
-      router.push("/onboarding");
+      openSignIn({ fallbackRedirectUrl: "/user-info" });
+      return;
+    }
+    if (!userChecked) return;
+    if (!dbUser) {
+      router.push("/user-info");
     } else {
-      // Has profile → go to profile page
       router.push("/profile");
     }
   };
@@ -61,7 +68,6 @@ export const HeaderWithLogo = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        {/* User button */}
         <button
           onClick={handleUserClick}
           className="flex items-center gap-2 p-1.5 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
@@ -79,8 +85,6 @@ export const HeaderWithLogo = () => {
               className="text-white bg-blue-500 p-[2px] rounded-full"
             />
           )}
-
-          {/* Show name if profile exists */}
           {dbUser && (
             <span className="text-sm font-medium hidden sm:block">
               {dbUser.lastName} {dbUser.firstName}
