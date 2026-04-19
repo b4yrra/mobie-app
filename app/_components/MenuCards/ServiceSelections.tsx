@@ -27,21 +27,25 @@ const services = [
 
 export const ServiceSelection = () => {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Once it has animated in, we can stop observing to save resources
           if (containerRef.current) observer.unobserve(containerRef.current);
         }
       },
       {
-        threshold: 0.1, // Trigger when 10% of the section is visible
-        rootMargin: "0px 0px -50px 0px", // Slight offset so it triggers just before it hits the view
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
       },
     );
 
@@ -51,6 +55,12 @@ export const ServiceSelection = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  const themeClass = !mounted
+    ? ""
+    : theme === "light"
+      ? "bg-white border-[#e6ebf3]"
+      : "bg-[#1e2a40] border-[#2a3b55]";
 
   return (
     <div
@@ -69,13 +79,12 @@ export const ServiceSelection = () => {
           <button
             key={index}
             style={{
-              // Increase the multiplier (e.g., 50ms) to make the sequence slower/faster
               transitionDelay: isVisible ? `${index * 40}ms` : "0ms",
             }}
             className={`
-              text-[13px] font-medium tracking-[0.32px] px-4 py-3 rounded-full border 
+              text-[13px] font-medium tracking-[0.32px] px-4 py-3 rounded-full border
               transition-all duration-500 ease-out
-              ${theme === "light" ? "bg-white border-[#e6ebf3]" : "bg-[#1e2a40] border-[#2a3b55]"}
+              ${themeClass}
               ${
                 isVisible
                   ? "opacity-100 translate-y-0 scale-100"

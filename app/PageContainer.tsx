@@ -8,6 +8,7 @@ import { ServiceSelection } from "./_components/MenuCards/ServiceSelections";
 import { NewsDashboard } from "./_components/NewsSection/NewsSection";
 import { SlideNews } from "./_components/NewsSection/SlideNews";
 import { MongolianStatsDashboard } from "./_components/Footer/BottomInformation";
+import { FooterSection } from "./_components/Footer/FooterSection";
 
 const ScrollSection = ({ children }: { children: React.ReactNode }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -42,26 +43,28 @@ const ScrollSection = ({ children }: { children: React.ReactNode }) => {
 
 export const PageContainer = () => {
   return (
-    <div className="flex flex-col gap-10">
-      <ScrollSection>
-        <HeroInputSection />
-      </ScrollSection>
+    <div>
+      <div className="flex flex-col gap-10">
+        <ScrollSection>
+          <HeroInputSection />
+        </ScrollSection>
 
-      <ScrollSection>
-        <MainSection />
-      </ScrollSection>
+        <ScrollSection>
+          <MainSection />
+        </ScrollSection>
 
-      <ScrollSection>
-        <ServiceSelection />
-      </ScrollSection>
+        <ScrollSection>
+          <ServiceSelection />
+        </ScrollSection>
 
-      <ScrollSection>
-        <GuideMenu />
-      </ScrollSection>
+        <ScrollSection>
+          <GuideMenu />
+        </ScrollSection>
 
-      <ScrollSection>
-        <NewsDashboard />
-      </ScrollSection>
+        <ScrollSection>
+          <NewsDashboard />
+        </ScrollSection>
+      </div>
 
       <div className="px-3 mt-20">
         <ScrollSection>
@@ -72,6 +75,9 @@ export const PageContainer = () => {
           <MongolianStatsDashboard />
         </ScrollSection>
       </div>
+      <ScrollSection>
+        <FooterSection />
+      </ScrollSection>
     </div>
   );
 };
