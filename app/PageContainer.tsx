@@ -75,9 +75,6 @@ export const PageContainer = () => {
           <MongolianStatsDashboard />
         </ScrollSection>
       </div>
-      <ScrollSection>
-        <FooterSection />
-      </ScrollSection>
     </div>
   );
 };
