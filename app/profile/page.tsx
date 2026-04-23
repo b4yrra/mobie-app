@@ -59,7 +59,7 @@ export default function ProfilePage() {
           <img
             src="https://cache.e-mongolia.mn/files/portal-v5/images/profile/tree.svg"
             alt="Tree Right"
-            className="absolute right-[-60px] bottom-0 w-45 h-auto transform scale-x-[-1] pointer-events-none z-999"
+            className="absolute right-[-60px] bottom-0 w-45 h-auto transform scale-x-[-1] pointer-events-none z-20"
           />
 
           <div className="relative z-10 text-center px-4">
@@ -137,12 +137,12 @@ export default function ProfilePage() {
             {/* Name & Email Details */}
             <div className="pt-12">
               <h2 className="text-[#0057ff] text-[18px] font-bold leading-tight">
-                {user?.lastName ?? "Түнжинбаатар"}
+                {user?.lastName}
                 <br />
-                {user?.firstName ?? "Чинбаяр"}
+                {user?.firstName}
               </h2>
               <p className="text-gray-500 dark:text-[#e7e7e7] text-[12px] mt-1 leading-tight break-all max-w-[120px]">
-                {user?.email ?? "397360245625@e-mongolia.mn"}
+                {user?.email ?? "08347598723@e-mongolia.mn"}
               </p>
             </div>
           </div>
