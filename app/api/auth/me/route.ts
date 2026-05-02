@@ -13,6 +13,7 @@ export async function GET() {
       firstName: true,
       lastName: true,
       imageUrl: true,
+      dateOfBirth: true,
     },
   });
 

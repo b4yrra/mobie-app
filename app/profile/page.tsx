@@ -24,7 +24,7 @@ type User = {
   lastName: string;
   imageUrl: string | null;
   email: string;
-  birthday?: string;
+  dateOfBirth?: string;
 };
 
 const bottomNavItems = [
@@ -37,6 +37,7 @@ const bottomNavItems = [
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
+  const [showIdSheet, setShowIdSheet] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -143,7 +144,7 @@ export default function ProfilePage() {
                 {user?.firstName}
               </h2>
               <p className="text-gray-500 dark:text-[#e7e7e7] text-[12px] mt-1 leading-tight break-all max-w-[120px]">
-                {user?.email ?? "08347598723@e-mongolia.mn"}
+                {user?.email ?? "023477295583@e-mongolia.mn"}
               </p>
             </div>
           </div>
@@ -162,17 +163,10 @@ export default function ProfilePage() {
             Төрд байгаа миний мэдээлэл
           </span>
 
-          <button className="flex items-center gap-2 bg-[#edf4ff] hover:bg-[#e0ecff] transition-colors py-1.5 pl-4 pr-1.5 rounded-full">
+          <button className="flex items-center gap-2 bg-[#edf4ff] hover:bg-[#e0ecff] transition-colors py-1.5 px-4 rounded-xl">
             <span className="text-[#1a2d4a] text-[13px] font-bold text-nowrap">
               Бичиг баримт
             </span>
-            <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-sm">
-              <ChevronRight
-                size={16}
-                className="text-gray-600"
-                strokeWidth={2.5}
-              />
-            </div>
           </button>
         </div>
       </div>
@@ -186,7 +180,7 @@ export default function ProfilePage() {
       </div>
 
       {/* ID Card */}
-      <div className="mx-3 mt-3">
+      <div className="mx-3 mt-3" onClick={() => setShowIdSheet(true)}>
         <div
           className="rounded-2xl overflow-hidden h-60 relative"
           style={{
@@ -198,7 +192,7 @@ export default function ProfilePage() {
         >
           <div className="flex gap-3 p-4 absolute top-17">
             {/* Photo */}
-            <div className="w-[80px] h-[100px] flex-shrink-0 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700">
+            <div className="w-[87.5px] h-[120px] flex-shrink-0 rounded-lg overflow-hidden absolute left-2.5 top-1">
               {user?.imageUrl ? (
                 <img
                   src={user.imageUrl}
@@ -229,15 +223,101 @@ export default function ProfilePage() {
                   </p>
                 </div>
               </div>
-              <div>
-                <p className="text-gray-800 text-[10px] uppercase absolute top-26">
-                  {user?.birthday ?? "—"}
-                </p>
+              <div className="text-gray-800 text-[10px] absolute top-26.5">
+                {user?.dateOfBirth
+                  ? new Date(user.dateOfBirth)
+                      .toLocaleDateString("en-CA") // gives YYYY/MM/DD
+                      .replace(/-/g, "/")
+                  : "—"}
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {showIdSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowIdSheet(false)}
+          />
+
+          {/* Sheet */}
+          <div className="relative bg-white dark:bg-[#0c192e] rounded-t-3xl z-10 pb-10 animate-slide-up">
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-4">
+              <div className="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-600" />
+            </div>
+
+            <p className="text-center text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">
+              Иргэний үнэмлэх
+            </p>
+
+            {/* Exact same card as profile */}
+            <div className="mx-4 rounded-2xl overflow-hidden h-60 relative">
+              <div
+                className="w-full h-full"
+                style={{
+                  backgroundImage:
+                    "url('678807850_1292397376412441_2461215056111892568_n.jpg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                <div className="flex gap-3 p-4 absolute top-17">
+                  <div className="w-[85px] h-[120px] flex-shrink-0 rounded-lg overflow-hidden absolute left-2.5 top-1">
+                    {user?.imageUrl ? (
+                      <img
+                        src={user.imageUrl}
+                        alt="id"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 space-y-2 absolute left-28">
+                    <div>
+                      <p className="text-gray-800 text-[10px] absolute top-0.5">
+                        {user?.lastName ?? "—"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-800 text-[10px] uppercase absolute top-8">
+                        {user?.firstName ?? "—"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-800 text-[10px] absolute top-16">
+                        Эрэгтэй
+                      </p>
+                    </div>
+                    <div className="text-gray-800 text-[10px] absolute top-26.5">
+                      {user?.dateOfBirth
+                        ? new Date(user.dateOfBirth)
+                            .toLocaleDateString("en-CA")
+                            .replace(/-/g, "/")
+                        : "—"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mx-4 mt-4 flex flex-col gap-3">
+              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3.5 rounded-2xl transition-colors">
+                Лавлагаа авах
+              </button>
+              <button className="w-full text-blue-500 font-semibold py-2 transition-colors">
+                Дахин захиалах
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Bottom Nav */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#0c192e] border-t border-[#e7e7e7] dark:border-white/10 px-2 py-2 z-50">
