@@ -24,6 +24,7 @@ type User = {
   lastName: string;
   imageUrl: string | null;
   email: string;
+  birthday?: string;
 };
 
 const bottomNavItems = [
@@ -156,13 +157,13 @@ export default function ProfilePage() {
         </div>
 
         {/* Quick Links Row */}
-        <div className="mx-6 mt-8 mb-6 flex justify-between items-center">
-          <span className="text-[#1a2d4a] text-[14px] font-bold cursor-pointer hover:underline">
+        <div className="mx-6 mt-8 mb-6 flex justify-between items-center gap-3">
+          <span className="text-[#1a2d4a] text-[14px] font-bold cursor-pointer hover:underline text-nowrap">
             Төрд байгаа миний мэдээлэл
           </span>
 
           <button className="flex items-center gap-2 bg-[#edf4ff] hover:bg-[#e0ecff] transition-colors py-1.5 pl-4 pr-1.5 rounded-full">
-            <span className="text-[#1a2d4a] text-[13px] font-bold">
+            <span className="text-[#1a2d4a] text-[13px] font-bold text-nowrap">
               Бичиг баримт
             </span>
             <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-sm">
@@ -186,28 +187,16 @@ export default function ProfilePage() {
 
       {/* ID Card */}
       <div className="mx-3 mt-3">
-        <div className="bg-[#fef9f0] dark:bg-[#2a1f10] rounded-2xl overflow-hidden border border-orange-100 dark:border-orange-900/30 shadow-sm">
-          {/* Card header */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-orange-100 dark:border-orange-900/30">
-            <div className="w-8 h-6 rounded-sm overflow-hidden flex-shrink-0">
-              {/* Mongolian flag */}
-              <div className="w-full h-full flex">
-                <div className="w-1/3 h-full bg-[#c4272f]" />
-                <div className="w-1/3 h-full bg-[#1a56a0]" />
-                <div className="w-1/3 h-full bg-[#c4272f]" />
-              </div>
-            </div>
-            <div>
-              <p className="text-[#1a56a0] text-[10px] font-extrabold tracking-wide">
-                МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ
-              </p>
-              <p className="text-[#1a56a0] text-[9px] font-semibold tracking-wide">
-                CITIZEN IDENTITY CARD OF MONGOLIA
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-3 p-4">
+        <div
+          className="rounded-2xl overflow-hidden h-60 relative"
+          style={{
+            backgroundImage:
+              "url('678807850_1292397376412441_2461215056111892568_n.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="flex gap-3 p-4 absolute top-17">
             {/* Photo */}
             <div className="w-[80px] h-[100px] flex-shrink-0 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700">
               {user?.imageUrl ? (
@@ -222,40 +211,28 @@ export default function ProfilePage() {
             </div>
 
             {/* Fields */}
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-2 absolute left-28">
               <div>
-                <p className="text-[#1a56a0] text-[9px] font-semibold">
-                  Овог Family name
-                </p>
-                <p className="text-gray-800 dark:text-gray-100 text-[13px] font-bold">
+                <p className="text-gray-800 text-[10px] absolute top-0.5">
                   {user?.lastName ?? "—"}
                 </p>
               </div>
               <div>
-                <p className="text-[#1a56a0] text-[9px] font-semibold">
-                  Эцэг/ эх /-ийн нэр Surname
-                </p>
-                <p className="text-gray-800 dark:text-gray-100 text-[13px] font-bold">
-                  {user?.lastName ?? "—"}
-                </p>
-              </div>
-              <div>
-                <p className="text-[#1a56a0] text-[9px] font-semibold">
-                  Нэр Given name
-                </p>
-                <p className="text-gray-800 dark:text-gray-100 text-[13px] font-bold uppercase">
+                <p className="text-gray-800 text-[10px] uppercase absolute top-8">
                   {user?.firstName ?? "—"}
                 </p>
               </div>
               <div className="flex gap-4">
                 <div>
-                  <p className="text-[#1a56a0] text-[9px] font-semibold">
-                    Хүйс Sex
-                  </p>
-                  <p className="text-gray-800 dark:text-gray-100 text-[12px] font-bold">
+                  <p className="text-gray-800 text-[10px] absolute top-16">
                     Эрэгтэй
                   </p>
                 </div>
+              </div>
+              <div>
+                <p className="text-gray-800 text-[10px] uppercase absolute top-26">
+                  {user?.birthday ?? "—"}
+                </p>
               </div>
             </div>
           </div>
